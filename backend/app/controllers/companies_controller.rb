@@ -6,13 +6,17 @@ class CompaniesController < ApplicationController
   def index
     @companies = Company.all
     paginate json: @companies
-  end
 
-  # GET /companies/1
-  # GET /companies/1.json
+end
+
+# GET /companies/1
+# GET /companies/1.json
   def show
     @companies = Company.find(params[:id])
-    render json: @companies
+    @companies.punch(request)
+    company_info = @companies.attributes
+    company_info[:count] = @companies.hits
+    render json: company_info
   end
 
   def parish
@@ -20,11 +24,11 @@ class CompaniesController < ApplicationController
     render json: @companies
   end
 
-  # POST /companies
-  # POST /companies.json
+# POST /companies
+# POST /companies.json
   def create
     @company = Company.new(company_params)
-
+  
     if @company.save
       render :show, status: :created, location: @company
     else
@@ -32,8 +36,8 @@ class CompaniesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /companies/1
-  # PATCH/PUT /companies/1.json
+# PATCH/PUT /companies/1
+# PATCH/PUT /companies/1.json
   def update
     if @company.update(company_params)
       render :show, status: :ok, location: @company
@@ -42,21 +46,22 @@ class CompaniesController < ApplicationController
     end
   end
 
-  # DELETE /companies/1
-  # DELETE /companies/1.json
+# DELETE /companies/1
+# DELETE /companies/1.json
   def destroy
     @company.destroy
   end
 
-  private
+private
 
-  # Use callbacks to share common setup or constraints between actions.
+# Use callbacks to share common setup or constraints between actions.
   def set_company
     @company = Company.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+# Never trust parameters from the scary internet, only allow the white list through.
   def company_params
     params.require(:company).permit(:name, :contact, :address, :parish, :postalCode)
   end
+
 end

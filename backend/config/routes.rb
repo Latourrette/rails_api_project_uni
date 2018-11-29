@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   resources :companies do
     collection do
       get 'parish'
+      #get 'count'
     end
   end
-  resources :users, only: :create
   resources :users, only: :create do
     collection do
       post 'confirm'

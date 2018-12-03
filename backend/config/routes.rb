@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :companies do
     collection do
       get 'cities'
-      #get 'count'
+      get 'top_five'
     end
   end
   resources :users, only: :create do

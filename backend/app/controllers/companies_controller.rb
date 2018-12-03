@@ -6,10 +6,10 @@ class CompaniesController < ApplicationController
   def index
     @companies = Company.all
     paginate json: @companies
-end
+  end
 
-# GET /companies/1
-# GET /companies/1.json
+  # GET /companies/1
+  # GET /companies/1.json
   def show
     @companies = Company.find(params[:id])
     @companies.punch(request)
@@ -18,18 +18,29 @@ end
     render json: company_info
   end
 
-#GET distinct cities /companies/cities
+  def top_five
+    @companies = Company.most_hit
+    aux = []
+    @companies.each do |company|
+      company_info = company.attributes
+      company_info[:count] = company.hits
+      aux << company_info
+    end
+    render json: aux
+  end
+
+  #GET distinct cities /companies/cities
   def cities
     @companies = Company.distinct.pluck(:city)
     render json: @companies
   end
 
-# POST /companies
-# POST /companies.json
+  # POST /companies
+  # POST /companies.json
   def create
     @company = Company.new(company_params)
-  
     if @company.save
+      @company.path_image
       message = {'status' => 'Created new Company.'}
       render json: message
     else
@@ -37,8 +48,8 @@ end
     end
   end
 
-# PATCH/PUT /companies/1
-# PATCH/PUT /companies/1.json
+  # PATCH/PUT /companies/1
+  # PATCH/PUT /companies/1.json
   def update
     if @company.update(company_params)
       message = {'status' => 'Saved successfully.'}
@@ -48,22 +59,21 @@ end
     end
   end
 
-# DELETE /companies/1
-# DELETE /companies/1.json
+  # DELETE /companies/1
+  # DELETE /companies/1.json
   def destroy
     @company.destroy
   end
 
-private
+  private
 
-# Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_company
     @company = Company.find(params[:id])
   end
 
-# Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
     params.require(:company).permit(:name, :contact, :address, :city, :postalCode, :path_image, :long, :lat)
   end
-
 end

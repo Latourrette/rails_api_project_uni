@@ -6,7 +6,6 @@ class CompaniesController < ApplicationController
   def index
     @companies = Company.all
     paginate json: @companies
-
 end
 
 # GET /companies/1
@@ -19,8 +18,9 @@ end
     render json: company_info
   end
 
-  def parish
-    @companies = Company.distinct.pluck(:parish)
+#GET distinct cities /companies/cities
+  def cities
+    @companies = Company.distinct.pluck(:city)
     render json: @companies
   end
 
@@ -30,7 +30,8 @@ end
     @company = Company.new(company_params)
   
     if @company.save
-      render :show, status: :created, location: @company
+      message = {'status' => 'Created new Company.'}
+      render json: message
     else
       render json: @company.errors, status: :unprocessable_entity
     end
@@ -40,7 +41,8 @@ end
 # PATCH/PUT /companies/1.json
   def update
     if @company.update(company_params)
-      render :show, status: :ok, location: @company
+      message = {'status' => 'Saved successfully.'}
+      render json: message
     else
       render json: @company.errors, status: :unprocessable_entity
     end
@@ -61,7 +63,7 @@ private
 
 # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
-    params.require(:company).permit(:name, :contact, :address, :parish, :postalCode)
+    params.require(:company).permit(:name, :contact, :address, :city, :postalCode, :path_image, :long, :lat)
   end
 
 end

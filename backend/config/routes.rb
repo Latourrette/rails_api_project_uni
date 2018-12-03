@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   resources :companies do
     collection do
-      get 'parish'
+      get 'cities'
       #get 'count'
     end
   end

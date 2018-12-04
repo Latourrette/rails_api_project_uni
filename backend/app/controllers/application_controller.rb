@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include ActionController::Serialization
   require 'jsonwebtoken'
 
   protected

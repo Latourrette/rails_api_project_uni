@@ -1,5 +1,7 @@
 class CompaniesController < ApplicationController
+  #skip_before_action :authorize_request, only: %i[index show]
   before_action :set_company, only: %i[show update destroy]
+
 
   # GET /companies
   # GET /companies.json
@@ -13,20 +15,12 @@ class CompaniesController < ApplicationController
   def show
     @companies = Company.find(params[:id])
     @companies.punch(request)
-    company_info = @companies.attributes
-    company_info[:count] = @companies.hits
-    render json: company_info
+    render json: @companies
   end
 
   def top_five
     @companies = Company.most_hit
-    aux = []
-    @companies.each do |company|
-      company_info = company.attributes
-      company_info[:count] = company.hits
-      aux << company_info
-    end
-    render json: aux
+    render json: @companies
   end
 
   def search
@@ -80,6 +74,6 @@ class CompaniesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
-    params.require(:company).permit(:name, :contact, :address, :city, :postalCode, :path_image, :long, :lat)
+    params.require(:company).permit(:name, :contact, :address, :city, :postalCode, :image, :long, :lat)
   end
 end

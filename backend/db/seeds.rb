@@ -13,12 +13,12 @@
 Company.create!(name: 'Turra',
                 contact: '918251959',
                 address: 'Rua actor Ferreira da Silva',
-                parish: 'Porto',
+                city: 'Porto',
                 postalCode: '4200-298')
 
 
 Company.create!(name: 'Nugs',
                 contact: '911111111',
                 address: 'Rua actor Ferreira da Silva',
-                parish: 'Porto',
+                city: 'Porto',
                 postalCode: '4200-298')

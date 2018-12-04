@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 2018_12_03_205912) do
     t.string "postalCode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "path_image"
     t.float "long"
     t.float "lat"
   end

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do
       get 'cities'
       get 'top_five'
+      get 'search'
     end
   end
   resources :users, only: :create do

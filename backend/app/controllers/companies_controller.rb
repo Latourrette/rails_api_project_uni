@@ -29,6 +29,13 @@ class CompaniesController < ApplicationController
     render json: aux
   end
 
+  def search
+    name = params[:name]
+    city = params[:city]
+    @companies = Company.where("name ILIKE ?", "%#{name}%").where("city ILIKE ?", "%#{city}%")
+    render json: @companies
+  end
+
   #GET distinct cities /companies/cities
   def cities
     @companies = Company.distinct.pluck(:city)
@@ -40,7 +47,6 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      @company.path_image
       message = {'status' => 'Created new Company.'}
       render json: message
     else

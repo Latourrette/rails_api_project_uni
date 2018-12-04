@@ -1,5 +1,5 @@
 class Company < ApplicationRecord
-  include ActiveModel::Serialization
+  has_one_attached :image
   acts_as_punchable
 
 end

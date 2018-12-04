@@ -7,10 +7,10 @@ services:
     ports:
       - "5432:5432"
   backend:
-    build: ./backend
+    build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
-    - ./backend:/yellowpages/backend
+    - .:/app
     ports:
     - "3001:3000"
     depends_on:

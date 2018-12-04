@@ -8,6 +8,7 @@ class CompaniesController < ApplicationController
   def index
     @companies = Company.all
     paginate json: @companies
+    #render json: Company.order(id: :asc).to_json(methods: %i[company_image_url]), status: :ok
   end
 
   # GET /companies/1
@@ -39,7 +40,7 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = Company.new(company_params)
+    @company = Company.create!(company_params)
     if @company.save
       message = {'status' => 'Created new Company.'}
       render json: message

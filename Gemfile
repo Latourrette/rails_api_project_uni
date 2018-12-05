@@ -27,9 +27,6 @@ gem 'punching_bag', '~> 0.6.0'
 
 gem 'active_model_serializers', '~> 0.9.3'
 
-#gem 'rswag'
-
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

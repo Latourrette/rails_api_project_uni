@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  #skip_before_action :authorize_request, only: %i[index show]
+  #skip_before_action :authenticate_request!, only: %i[index show]
   before_action :set_company, only: %i[show update destroy]
 
 
@@ -8,7 +8,6 @@ class CompaniesController < ApplicationController
   def index
     @companies = Company.all
     paginate json: @companies
-    #render json: Company.order(id: :asc).to_json(methods: %i[company_image_url]), status: :ok
   end
 
   # GET /companies/1
